@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/index.css">
+    <link rel="shortcut icon" href="../components/clock_1tX_icon.ico" type="image/x-icon">
     <title>Pomodoro timer</title>
 </head>
 <body>
@@ -12,23 +13,105 @@
         <h1>Pomodoro timer</h1>
         <div class="timer">
             <div class="times minutes">
-                <span>00</span>
+                <span id="minutes">00</span>
             </div>
                 <span>:</span>
             <div class="times seconds">
-                <span>00</span>
+                <span id="seconds">00</span>
             </div>
         </div>
         <div class="setTimer">
             <label for="executeTimes">Times to execute:</label>
-            <input type="number" min="1" max="10" name="executeTimes" id="">
-            <div class="defaultBtn run">
+            <input type="number" min="1" max="10" name="executeTimes" id="execTimes">
+            <div class="defaultBtn run" id="run">
                 <span>Run</span>
             </div>
-            <div class="defaultBtn stop">
+            <div class="defaultBtn stop" id="stop">
                 <span>Stop</span>
+            </div>
+            <div class="defaultBtn clear" id="clear">
+                <span>Clear</span>
             </div>
         </div>
     </div>
+    <script>
+    
+    let container = document.getElementsByClassName("container")
+    let boxTimer = document.getElementsByClassName("timer")
+    let timerSeconds = document.getElementById("seconds")
+    let timerMinutes = document.getElementById("minutes")
+    let isRunning = false
+    let interval =""
+    let hour = new Date();
+    let work = 25;
+    let relax = 1;
+    let seconds = 0;
+    let working = true;
+
+        document.getElementById("run").addEventListener("click", ()=>{
+            let timesToExecute = document.getElementById("execTimes").value
+            if(isRunning == false && timesToExecute > 0 && timesToExecute <= 10){
+                interval = setInterval(()=>{
+                    
+                    if(seconds==0){
+                        work-=1
+                        seconds = 60
+                    }
+
+                    seconds-=1
+                    
+                    if(work == 0 && seconds == 0 && working == true){
+                        work = relax
+                        working = false
+                        
+                        container[0].classList.toggle(relaxing)
+                        boxTimer[0].classList.toggle(relaxing)
+                    }else if(work == 0 && seconds == 0 && working == false){
+                        work = 25
+                        working = true
+                        container[0].classList.toggle(relaxing)
+                        boxTimer[0].classList.toggle(relaxing)
+                        timesToExecute-=1
+                    }
+
+                    console.log(work)
+                    console.log(seconds)
+                    timerMinutes.innerText = format(work)
+                    timerSeconds.innerText = format(seconds)
+                    //console.log(timesToExecute)
+
+                    if(timesToExecute != 0){
+                    isRunning = true
+                    }else{
+                        isRunning = false
+                        clearInterval(interval)
+                    }
+                }, 1000)
+                
+            }else{
+                alert("APP rodando ou valor de execução inválido!!!")
+            }
+        })
+
+        document.getElementById("stop").addEventListener("click", ()=>{
+            clearInterval(interval)
+            if(isRunning == true){
+                let audio = new Audio("../components/bemtevi.mp3")
+                audio.play()
+                alert("O APP foi finalizado")
+            }
+            isRunning = false
+        })
+
+        function format(number){
+           if(number.toString().length == 1){
+               number=`0${number}`
+               return number
+           }
+           return number
+        }
+
+    
+    </script>
 </body>
 </html>
