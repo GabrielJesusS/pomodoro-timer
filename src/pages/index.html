@@ -4,9 +4,31 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/index.css">
     <title>Pomodoro timer</title>
 </head>
 <body>
-    <h1>hello world!</h1>
+    <div class="container">
+        <h1>Pomodoro timer</h1>
+        <div class="timer">
+            <div class="times minutes">
+                <span>00</span>
+            </div>
+                <span>:</span>
+            <div class="times seconds">
+                <span>00</span>
+            </div>
+        </div>
+        <div class="setTimer">
+            <label for="executeTimes">Times to execute:</label>
+            <input type="number" min="1" max="10" name="executeTimes" id="">
+            <div class="defaultBtn run">
+                <span>Run</span>
+            </div>
+            <div class="defaultBtn stop">
+                <span>Stop</span>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
