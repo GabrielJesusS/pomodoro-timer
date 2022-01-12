@@ -52,7 +52,7 @@
             let timesToExecute = document.getElementById("execTimes").value
             if(isRunning == false && timesToExecute > 0 && timesToExecute <= 10){
                 interval = setInterval(()=>{
-                    
+                    document.getElementById("execTimes").value = ""
                     if(seconds==0){
                         work-=1
                         seconds = 60
@@ -61,16 +61,20 @@
                     seconds-=1
                     
                     if(work == 0 && seconds == 0 && working == true){
+                        let audio = new Audio("../components/died.mp3")
+                        audio.play()
                         work = relax
                         working = false
                         
-                        container[0].classList.toggle(relaxing)
-                        boxTimer[0].classList.toggle(relaxing)
+                        container[0].classList.toggle('relaxing')
+                        boxTimer[0].classList.toggle('relaxing')
                     }else if(work == 0 && seconds == 0 && working == false){
+                        let audio = new Audio("../components/coin.mp3")
+                        audio.play()
                         work = 25
                         working = true
-                        container[0].classList.toggle(relaxing)
-                        boxTimer[0].classList.toggle(relaxing)
+                        container[0].classList.toggle('relaxing')
+                        boxTimer[0].classList.toggle('relaxing')
                         timesToExecute-=1
                     }
 
@@ -96,8 +100,7 @@
         document.getElementById("stop").addEventListener("click", ()=>{
             clearInterval(interval)
             if(isRunning == true){
-                let audio = new Audio("../components/bemtevi.mp3")
-                audio.play()
+                
                 alert("O APP foi finalizado")
             }
             isRunning = false
@@ -111,6 +114,19 @@
            return number
         }
 
+    
+        document.getElementById("clear").addEventListener("click", ()=>{
+            clearInterval(interval)
+            document.getElementById("execTimes").value = ""
+            if(isRunning == true){
+               timerSeconds.innerText = format(0)
+               timerMinutes.innerText = 25
+                work = 25;
+                seconds = 0
+                alert("O APP foi finalizado")
+            }
+            isRunning = false
+        })
     
     </script>
 </body>
